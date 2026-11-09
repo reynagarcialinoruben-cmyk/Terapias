@@ -1,14 +1,30 @@
 services:
+  # Backend: reservas + login de administrador
+  api:
+    build: ./server
+    env_file: .env # ADMIN_USER, ADMIN_PASSWORD, TOKEN_SECRET (ver .env.example)
+    environment:
+      DATA_FILE: /data/bookings.json
+    volumes:
+      - data:/data # las reservas sobreviven a reinicios
+    expose:
+      - "3001"
+    restart: unless-stopped
+
   # Desarrollo con hot reload:  docker compose up dev
   dev:
     build:
       context: .
       target: dev
+    environment:
+      API_URL: http://api:3001
     ports:
       - "5173:5173"
     volumes:
       - .:/app
       - /app/node_modules
+    depends_on:
+      - api
 
   # Versión de producción:  docker compose up prod
   prod:
@@ -17,3 +33,8 @@ services:
       target: prod
     ports:
       - "8080:80"
+    depends_on:
+      - api
+
+volumes:
+  data:
