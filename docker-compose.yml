@@ -1,0 +1,19 @@
+services:
+  # Desarrollo con hot reload:  docker compose up dev
+  dev:
+    build:
+      context: .
+      target: dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+  # Versión de producción:  docker compose up prod
+  prod:
+    build:
+      context: .
+      target: prod
+    ports:
+      - "8080:80"
