@@ -32,5 +32,5 @@ html { scroll-behavior: smooth; }
 body { @apply bg-sand-50 text-night-900 font-sans antialiased; }
 
 @media (prefers-reduced-motion: reduce) {
-  * { animation: none !important; scroll-behavior: auto !important; }
+  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
